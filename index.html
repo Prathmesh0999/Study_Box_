@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduTrack Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <section class="auth-layout auth-layout-single" id="auth-view">
+      <div class="auth-panel auth-panel-single card">
+        <div class="brand-lockup brand-lockup-centered">
+          <img class="brand-logo" src="studybox.jpg" alt="Study Box logo">
+          <div class="brand-copy">
+            <p class="eyebrow">Study Box Tuition Classes</p>
+            <span class="brand-tagline brand-tagline-dark">We Celebrate The Education</span>
+          </div>
+        </div>
+
+        <div class="auth-copy">
+          <p class="eyebrow">Academic Portal</p>
+          <h1>Study Box Login</h1>
+          <p class="muted">Use Studybox admin login or a student ID in the same login form.</p>
+        </div>
+
+        <form id="login-form" class="stack-form">
+          <label>
+            <span>Studybox or Student ID</span>
+            <input type="text" name="identifier" placeholder="Studybox or STU101" required>
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" placeholder="Enter password" required>
+          </label>
+          <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+
+        <p class="status-message" id="auth-message" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="dashboard hidden" id="admin-view">
+      <header class="dashboard-header card">
+        <div class="dashboard-branding">
+          <img class="dashboard-logo" src="assets/study-box-logo.svg" alt="Study Box logo">
+          <div>
+          <p class="eyebrow">Study Box Tuition Classes</p>
+          <h2>We Celebrate The Education</h2>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-grid dashboard-grid-dashboard" id="admin-dashboard-layout">
+        <aside class="side-panel card hidden" id="admin-side-panel">
+          <h3>Admin Tools</h3>
+          <div class="mini-stats" id="admin-stats"></div>
+
+          <div class="panel-switcher" id="admin-panel-switcher">
+            <button class="panel-button is-active" type="button" data-panel-target="dashboard-panel">Dashboard</button>
+            <button class="panel-button" type="button" data-panel-target="student-panel">Add Student</button>
+            <button class="panel-button" type="button" data-panel-target="marks-panel">Marks</button>
+            <button class="panel-button" type="button" data-panel-target="attendance-panel">Attendance</button>
+            <button class="panel-button" type="button" data-panel-target="download-panel">Download</button>
+            <button class="panel-button" type="button" data-panel-target="records-panel">Records</button>
+            <button class="panel-button" type="button" data-panel-target="remove-panel">Remove</button>
+            <button class="panel-button panel-button-logout" id="admin-logout" type="button">Logout</button>
+          </div>
+
+          <div class="info-box">
+            <p class="credential-title">Permissions</p>
+            <p>Admins can add marks, update attendance, and download marksheets.</p>
+          </div>
+        </aside>
+
+        <main class="main-panel">
+          <section class="card admin-panel is-active" id="dashboard-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Overview</p>
+                <h3>Dashboard</h3>
+              </div>
+            </div>
+
+            <div class="dashboard-summary-grid" id="dashboard-summary-grid"></div>
+
+            <div class="quick-actions">
+              <button class="quick-card" type="button" data-panel-open="student-panel">
+                <span class="quick-tag">Admissions</span>
+                <strong>Add Student</strong>
+                <p>Create new student accounts and assign board/class.</p>
+              </button>
+              <button class="quick-card" type="button" data-panel-open="marks-panel">
+                <span class="quick-tag">Academics</span>
+                <strong>Marks</strong>
+                <p>Publish marks for any student directly from the dashboard.</p>
+              </button>
+              <button class="quick-card" type="button" data-panel-open="attendance-panel">
+                <span class="quick-tag">Daily Work</span>
+                <strong>Attendance</strong>
+                <p>Tick present or absent status class-wise in one place.</p>
+              </button>
+              <button class="quick-card" type="button" data-panel-open="download-panel">
+                <span class="quick-tag">Reports</span>
+                <strong>Download</strong>
+                <p>Download marksheets and export student academic data.</p>
+              </button>
+              <button class="quick-card" type="button" data-panel-open="records-panel">
+                <span class="quick-tag">Review</span>
+                <strong>Records</strong>
+                <p>Check student records, attendance history, and recent marks.</p>
+              </button>
+              <button class="quick-card" type="button" data-panel-open="remove-panel">
+                <span class="quick-tag">Control</span>
+                <strong>Remove</strong>
+                <p>Remove students, published marks, or attendance entries.</p>
+              </button>
+            </div>
+          </section>
+
+          <section class="card admin-panel" id="student-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Admissions</p>
+                <h3>Add New Student</h3>
+              </div>
+            </div>
+
+            <form id="student-form" class="form-grid">
+              <label>
+                <span>Student Name</span>
+                <input type="text" name="name" placeholder="Riya Mehta" required>
+              </label>
+              <label>
+                <span>Student ID</span>
+                <input type="text" name="studentId" placeholder="STU301" required>
+              </label>
+              <label>
+                <span>Board</span>
+                <select name="board" id="student-board-select" required></select>
+              </label>
+              <label>
+                <span>Class</span>
+                <select name="className" id="student-class-select" required></select>
+              </label>
+              <label>
+                <span>Password</span>
+                <input type="text" name="password" placeholder="student123" required>
+              </label>
+              <div class="full-width">
+                <button class="btn btn-primary" type="submit">Add Student</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="card admin-panel is-active" id="marks-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Single Entry</p>
+                <h3>Upload Marks</h3>
+              </div>
+            </div>
+
+            <form id="marks-form" class="form-grid">
+              <label>
+                <span>Board</span>
+                <select name="board" id="marks-board-select" required></select>
+              </label>
+              <label>
+                <span>Class</span>
+                <select name="className" id="marks-class-select" required></select>
+              </label>
+              <label>
+                <span>Student</span>
+                <select name="studentId" id="marks-student-select" required></select>
+              </label>
+              <label>
+                <span>Subject</span>
+                <input type="text" name="subject" placeholder="Mathematics" required>
+              </label>
+              <label>
+                <span>Exam Type</span>
+                <select name="examType" required>
+                  <option value="Unit Test">Unit Test</option>
+                  <option value="Mid Term">Mid Term</option>
+                  <option value="Final Exam">Final Exam</option>
+                </select>
+              </label>
+              <label>
+                <span>Marks Obtained</span>
+                <input type="number" name="marks" min="0" max="100" placeholder="88" required>
+              </label>
+              <label>
+                <span>Maximum Marks</span>
+                <input type="number" name="maxMarks" min="1" max="100" value="100" required>
+              </label>
+              <div class="full-width">
+                <button class="btn btn-primary" type="submit">Save & Publish Marks</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="card admin-panel" id="attendance-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Attendance</p>
+                <h3>Tick Attendance</h3>
+              </div>
+            </div>
+
+            <form id="attendance-form" class="form-grid">
+              <label>
+                <span>Board</span>
+                <select name="board" id="attendance-board-select" required></select>
+              </label>
+              <label>
+                <span>Class</span>
+                <select name="className" id="attendance-class-select" required></select>
+              </label>
+              <label>
+                <span>Date</span>
+                <input type="date" name="attendanceDate" required>
+              </label>
+              <div class="full-width">
+                <div id="attendance-student-list" class="attendance-list"></div>
+              </div>
+              <div class="full-width">
+                <button class="btn btn-primary" type="submit">Save Attendance</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="card admin-panel" id="download-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Export</p>
+                <h3>Download Marksheet</h3>
+              </div>
+            </div>
+
+            <form id="download-form" class="form-grid">
+              <label>
+                <span>Board</span>
+                <select name="board" id="download-board-select" required></select>
+              </label>
+              <label>
+                <span>Class</span>
+                <select name="className" id="download-class-select" required></select>
+              </label>
+              <label>
+                <span>Student</span>
+                <select name="studentId" id="download-student-select" required></select>
+              </label>
+              <label>
+                <span>Format</span>
+                <select name="format" required>
+                  <option value="csv">Excel (CSV)</option>
+                  <option value="txt">PDF Summary (Text)</option>
+                </select>
+              </label>
+              <div class="full-width">
+                <button class="btn btn-secondary" type="submit">Download Marksheet</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="card admin-panel" id="records-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Records</p>
+                <h3>Student Data</h3>
+              </div>
+            </div>
+
+            <div class="record-filter">
+              <label>
+                <span>Filter by Board</span>
+                <select id="records-board-select"></select>
+              </label>
+              <label>
+                <span>Filter by Class</span>
+                <select id="records-class-select"></select>
+              </label>
+            </div>
+            <div id="admin-records" class="record-list"></div>
+          </section>
+
+          <section class="card admin-panel" id="remove-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Data Control</p>
+                <h3>Remove Student or Entries</h3>
+              </div>
+            </div>
+
+            <div class="remove-grid">
+              <form id="remove-student-form" class="stack-form remove-form">
+                <h4>Remove Student</h4>
+                <label>
+                  <span>Board</span>
+                  <select name="board" id="remove-student-board-select" required></select>
+                </label>
+                <label>
+                  <span>Class</span>
+                  <select name="className" id="remove-student-class-select" required></select>
+                </label>
+                <label>
+                  <span>Student</span>
+                  <select name="studentId" id="remove-student-select" required></select>
+                </label>
+                <button class="btn btn-danger" type="submit">Remove Student</button>
+              </form>
+
+              <form id="remove-mark-form" class="stack-form remove-form">
+                <h4>Remove Published Mark</h4>
+                <label>
+                  <span>Student</span>
+                  <select name="studentId" id="remove-mark-student-select" required></select>
+                </label>
+                <label>
+                  <span>Published Marks</span>
+                  <select name="markIndex" id="remove-mark-select" required></select>
+                </label>
+                <button class="btn btn-danger" type="submit">Remove Mark Entry</button>
+              </form>
+
+              <form id="remove-attendance-form" class="stack-form remove-form">
+                <h4>Remove Attendance Entry</h4>
+                <label>
+                  <span>Student</span>
+                  <select name="studentId" id="remove-attendance-student-select" required></select>
+                </label>
+                <label>
+                  <span>Attendance Records</span>
+                  <select name="attendanceIndex" id="remove-attendance-select" required></select>
+                </label>
+                <button class="btn btn-danger" type="submit">Remove Attendance</button>
+              </form>
+            </div>
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <section class="dashboard hidden" id="student-view">
+      <header class="dashboard-header card">
+        <div class="dashboard-branding">
+          <img class="dashboard-logo" src="assets/study-box-logo.svg" alt="Study Box logo">
+          <div>
+          <p class="eyebrow">Study Box Tuition Classes</p>
+          <h2>We Celebrate The Education</h2>
+          </div>
+        </div>
+      </header>
+
+      <section class="card student-profile-card">
+        <div class="record-badges">
+          <span class="badge primary" id="student-class-chip"></span>
+        </div>
+      </section>
+
+      <div class="student-overview">
+        <section class="card summary-card">
+          <p class="eyebrow">Attendance</p>
+          <h3 id="student-attendance-percentage">0%</h3>
+          <p class="muted" id="student-attendance-text">No attendance records available.</p>
+        </section>
+
+        <section class="card summary-card">
+          <p class="eyebrow">Performance</p>
+          <h3 id="student-average-score">0%</h3>
+          <p class="muted" id="student-average-text">No marks published yet.</p>
+        </section>
+      </div>
+
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Published Marks</p>
+            <h3>Marks and Grades</h3>
+          </div>
+        </div>
+        <div id="student-records" class="record-list"></div>
+      </section>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
